@@ -3,13 +3,13 @@ package com.mcmorrow.student.management.system;
 import java.util.Scanner;
 
 public class Student {
-    private String firstName;
-    private String lastName;
-    private int gradeYear;
+    private final String firstName;
+    private final String lastName;
+    private final int gradeYear;
     private String studentID;
     private String courses = "";
     private int tuitionBalance;
-    private static int costOfCourse = 600;
+    private static final int costOfCourse = 600;
     private static int id = 100;
 
     //Constructor prompts student to enter name and year.
