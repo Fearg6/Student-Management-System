@@ -6,8 +6,9 @@ public class Student {
     private final String firstName;
     private final String lastName;
     private final int gradeYear;
+    private final Scanner in = new Scanner(System.in);
     private String studentID;
-    private String courses = "";
+    private String coursesEnrolled = "";
     private int tuitionBalance;
     private static final int costOfCourse = 600;
     private static int id = 100;
@@ -15,14 +16,14 @@ public class Student {
     //Constructor prompts student to enter name and year.
 
     public Student() {
-        Scanner in = new Scanner(System.in);
-        System.out.println("Enter student First name: ");
+
+        printText("Enter student First name: ");
         this.firstName = in.nextLine();
 
-        System.out.println("Enter student Last name: ");
+        printText("Enter student Last name: ");
         this.lastName = in.nextLine();
 
-        System.out.println("1 - Freshmen\n2 - Sophomore\n3 - Junior\n4 - Senior\nEnter student class level: ");
+        printText("1 - Freshmen\n2 - Sophomore\n3 - Junior\n4 - Senior\nEnter student class level: ");
         this.gradeYear = in.nextInt();
 
         setStudentID();
@@ -33,7 +34,7 @@ public class Student {
     private void setStudentID(){
         // Grade level + ID
         id++;
-        this.studentID = gradeYear+""+id;
+        this.studentID = conCat(gradeYear,id);
     }
 
     //enroll in courses
@@ -42,10 +43,10 @@ public class Student {
         boolean pickingCourses = true;
         while (pickingCourses) {
             Scanner in = new Scanner(System.in);
-            System.out.println("Enter course to enroll, (Q to quit): ");
+            printText("Enter course to enroll, (Q to quit): ");
             String course = in.nextLine();
             if(!course.toUpperCase().equals("Q")){
-                this.courses = conCat(courses,"\n  "+course);
+                this.coursesEnrolled = conCat(coursesEnrolled,"\n  "+course);
                 this.tuitionBalance += costOfCourse;
             }else{
                 pickingCourses = false;
@@ -53,23 +54,30 @@ public class Student {
         }
     }
 
-    private String conCat(String courses, String addedCourse) {
-        return courses + addedCourse;
+    private void printText(String text) {
+        System.out.println(text);
+    }
+
+    private String conCat(int firstWord, int secondWord) {
+        return String.valueOf(firstWord)+ secondWord;
+    }
+
+    private String conCat(String firstWord, String secondWord) {
+        return firstWord + secondWord;
     }
 
     //view balance
     public void viewBalance(){
-        System.out.println("Your balance is: €"+tuitionBalance);
+        printText("Your balance is: €"+tuitionBalance);
     }
 
     // pay tuition
     public void payTuition(){
         viewBalance();
-        System.out.print("Enter your payment: €");
-        Scanner in = new Scanner(System.in);
+        printText("Enter your payment: €");
         int payment = in.nextInt();
-        this.tuitionBalance -= payment;
-        System.out.println("Thank you for your payment of €"+payment);
+        this.tuitionBalance = Math.max(tuitionBalance - payment,0);
+        printText("Thank you for your payment of €"+payment);
         viewBalance();
     }
 
@@ -77,9 +85,9 @@ public class Student {
     @Override
     public String toString(){
         return "Name: "+ firstName + " "+lastName+
-                "\nGrade level: " + gradeYear +
+                "\nGrade Year: " + gradeYear +
                 "\nStudent ID: " + studentID +
-                "\nCourses Enrolled: " + courses +
+                "\nCourses Enrolled: " + coursesEnrolled +
                 "\nBalance: €" + tuitionBalance;
     }
 }
