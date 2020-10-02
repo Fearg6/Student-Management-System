@@ -26,6 +26,9 @@ public class Student {
         do {
             printText("1 - Freshmen\n2 - Sophomore\n3 - Junior\n4 - Senior\nEnter student class level: ");
             this.gradeYear = in.nextInt();
+            if(this.gradeYear!=1 && this.gradeYear!=2 && this.gradeYear!=3 && this.gradeYear!=4){
+                printText("please enter a number 1-4");
+            }
         } while (this.gradeYear!=1 && this.gradeYear!=2 && this.gradeYear!=3 && this.gradeYear!=4);
 
         //Generate a Id for student
@@ -70,7 +73,7 @@ public class Student {
 
     //view balance
     private void viewBalance(){
-        printText("Your balance is: €"+tuitionBalance);
+        printText("Your balance is: €"+ tuitionBalance);
     }
 
     // pay tuition
@@ -80,6 +83,9 @@ public class Student {
         do {
             printText("Enter your payment: €");
             payment = in.nextInt();
+            if(payment<0||payment>this.tuitionBalance){
+                printText("Please enter an amount between 0 and balance");
+            }
         } while (payment<0||payment>this.tuitionBalance);
         this.tuitionBalance = Math.max(tuitionBalance - payment,0);
         printText("Thank you for your payment of €"+payment);
